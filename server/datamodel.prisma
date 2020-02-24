@@ -1,0 +1,6 @@
+type Fact {
+  id: ID! @id
+  text: String!
+  upvotes: Int!
+  createdAt: DateTime! @createdAt
+}

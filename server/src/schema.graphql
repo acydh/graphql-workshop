@@ -1,0 +1,12 @@
+# import * from './generated/prisma.graphql'
+
+type Mutation {
+    submitFact(
+        text: String!
+        upvotes: Int!
+    ): Fact!
+}
+
+type Query {
+    facts: [Fact]!
+}

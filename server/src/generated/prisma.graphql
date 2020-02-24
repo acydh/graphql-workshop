@@ -1,0 +1,172 @@
+type AggregateFact {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+type Fact {
+  id: ID!
+  text: String!
+  upvotes: Int!
+  createdAt: DateTime!
+}
+
+type FactConnection {
+  pageInfo: PageInfo!
+  edges: [FactEdge]!
+  aggregate: AggregateFact!
+}
+
+input FactCreateInput {
+  id: ID
+  text: String!
+  upvotes: Int!
+}
+
+type FactEdge {
+  node: Fact!
+  cursor: String!
+}
+
+enum FactOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  upvotes_ASC
+  upvotes_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FactPreviousValues {
+  id: ID!
+  text: String!
+  upvotes: Int!
+  createdAt: DateTime!
+}
+
+type FactSubscriptionPayload {
+  mutation: MutationType!
+  node: Fact
+  updatedFields: [String!]
+  previousValues: FactPreviousValues
+}
+
+input FactSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FactWhereInput
+  AND: [FactSubscriptionWhereInput!]
+  OR: [FactSubscriptionWhereInput!]
+  NOT: [FactSubscriptionWhereInput!]
+}
+
+input FactUpdateInput {
+  text: String
+  upvotes: Int
+}
+
+input FactUpdateManyMutationInput {
+  text: String
+  upvotes: Int
+}
+
+input FactWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  upvotes: Int
+  upvotes_not: Int
+  upvotes_in: [Int!]
+  upvotes_not_in: [Int!]
+  upvotes_lt: Int
+  upvotes_lte: Int
+  upvotes_gt: Int
+  upvotes_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [FactWhereInput!]
+  OR: [FactWhereInput!]
+  NOT: [FactWhereInput!]
+}
+
+input FactWhereUniqueInput {
+  id: ID
+}
+
+scalar Long
+
+type Mutation {
+  createFact(data: FactCreateInput!): Fact!
+  updateFact(data: FactUpdateInput!, where: FactWhereUniqueInput!): Fact
+  updateManyFacts(data: FactUpdateManyMutationInput!, where: FactWhereInput): BatchPayload!
+  upsertFact(where: FactWhereUniqueInput!, create: FactCreateInput!, update: FactUpdateInput!): Fact!
+  deleteFact(where: FactWhereUniqueInput!): Fact
+  deleteManyFacts(where: FactWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  fact(where: FactWhereUniqueInput!): Fact
+  facts(where: FactWhereInput, orderBy: FactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Fact]!
+  factsConnection(where: FactWhereInput, orderBy: FactOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FactConnection!
+  node(id: ID!): Node
+}
+
+type Subscription {
+  fact(where: FactSubscriptionWhereInput): FactSubscriptionPayload
+}
